@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>[% system_name %] Freelex Print</title>
+[% INCLUDE style.tt %]
+</head>
+<body bgcolor="ffffff">
+[% INCLUDE navl2.inc %]
+<br>
+[% IF message %]
+<font color="red"><b>[% message %]</b></font>
+[% END %]
+[% FOREACH prettyarray IN entrygroups %]
+[% INCLUDE prettyentry.tt %]
+[% END %]
+
+<br>
+<br>
+<br>
+[% INCLUDE navl2.inc %]
+</body>
+</html>

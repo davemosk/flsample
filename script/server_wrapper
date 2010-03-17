@@ -1,0 +1,7 @@
+#!/bin/sh 
+LOGFILE=/var/log/fula/access_log
+ERRLOGFILE=/var/log/fula/error_log
+RUNDIR=/home/www-bin/fula/script
+
+echo $RUNDIR/fula_server.pl
+/home/www-bin/fula/script/fula_server.pl >>$LOGFILE 2>>$ERRLOGFILE  

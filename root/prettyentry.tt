@@ -1,0 +1,30 @@
+
+<div><p>
+[% FOREACH pretty IN prettyarray %]
+[% IF loop.first || pretty.newvariantno %]</p></div><div style="padding-left: 30px;"><p style="text-indent: -25px; text-align: justify"><b>[% pretty.headword %][% IF pretty.variantno %]<sup>[% pretty.variantno %]</sup>[% END %][% END %]</b>
+<small>
+[% IF id == pretty.headwordid || pretty.newheadword == 1 %]<font color="#669933"><b>[</b>[% ELSE %]
+<small><small>&lt;<a href="../headword/display?_id=[% pretty.headwordid %]&_nav=no" onClick="window.open('../headword/display?_id=[% pretty.headwordid %]&_nav=no','editwin', 'toolbar=no, directories=no, location=no, status=yes, menubar=no, resizable=yes, scrollbars=yes, width=700, height=400'); return false">[% pretty.headwordid %]</a>&gt;</small></small>[% END %]
+[% IF pretty.majsense && pretty.newmajsense %][% pretty.majsense %]. [% END %]
+[% IF pretty.wordclassid %]<font color="#FF0000"><i>[% pretty.wordclassid %][% IF pretty.SECONDARYWORDCLASS %]/[% pretty.SECONDARYWORDCLASS %][% END %]</i></font>[% END %]
+[% IF pretty.HEADWORDTAGS %] [% pretty.HEADWORDTAGS %]. [% END %]
+[% IF pretty.USAGE %]<font color="#FF0000"><i>&lt;[% pretty.USAGE %]&gt;</i></font>[% END %]
+[% IF pretty.subentry %]<b>[% pretty.subentry %]</b>. [% END %]
+[% IF pretty.definition %][% pretty.definition %][% END %]
+[% IF pretty.example %]<font color="#990000"><i>[% pretty.example %]</i></font>[% END %]
+[% IF pretty.example2 %]<font color="#990000"><i>[% pretty.example2 %]</i></font>[% END %]
+[% IF pretty.example3 %]<font color="#990000"><i>[% pretty.example3 %]</i></font>[% END %]
+[% IF pretty.exampletranslation %][% pretty.exampletranslation %][% END %]
+[% IF pretty.mastersynonymheadwordid %][% pretty.mastersynonymheadwordid %][% END %]
+[% IF pretty.SLAVESYNONYMS %]{[% pretty.SLAVESYNONYMS %]}[% END %]
+[% IF pretty.cf %]Cf. <i>[% pretty.cf %]</i>.[% END %]
+[% IF pretty.also %]Also <i>[% pretty.also %]</i>. [% END %]
+[% IF pretty.synonyms %]nannd: <i>[% pretty.synonyms %]</i>. [% END %]
+[% IF pretty.essay %]&#x263c; [% pretty.essay %] [% END %]
+[% IF id == pretty.headwordid || pretty.newheadword == 1 %]<b>]</b></font>[% END %]
+
+</small>
+[% END %]
+
+</p>
+</div>
