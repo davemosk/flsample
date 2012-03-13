@@ -1,7 +1,7 @@
 #!/bin/sh 
-LOGFILE=/var/log/fula/access_log
-ERRLOGFILE=/var/log/fula/error_log
-RUNDIR=/home/www-bin/fula/script
+LOGFILE=/var/log/flsample/access_log
+ERRLOGFILE=/var/log/flsample/error_log
+RUNDIR=/home/www-bin/flsample/script
 
-echo $RUNDIR/fula_server.pl
-/home/www-bin/fula/script/fula_server.pl >>$LOGFILE 2>>$ERRLOGFILE  
+echo $RUNDIR/flsample_server.pl
+/home/www-bin/flsample/script/flsample_server.pl -p 3999 >>$LOGFILE 2>>$ERRLOGFILE  

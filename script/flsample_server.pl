@@ -1,87 +1,47 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
 
-BEGIN { 
-    $ENV{CATALYST_ENGINE} ||= 'HTTP';
-    $ENV{CATALYST_SCRIPT_GEN} = 27;
-}  
+BEGIN {
+    $ENV{CATALYST_SCRIPT_GEN} = 40;
+}
 
-use strict;
-use Getopt::Long;
-use Pod::Usage;
 use FindBin;
 use lib '/home/www-bin/freelex/lib';
 use lib "$FindBin::Bin/../lib";
 
-my $debug         = 0;
-my $fork          = 0;
-my $help          = 0;
-my $host          = undef;
-my $port          = 3999;
-my $keepalive     = 1;
-my $restart       = 0;
-my $restart_delay = 1;
-my $restart_regex = '\.yml$|\.yaml$|\.pm$';
-
-my @argv = @ARGV;
-
-GetOptions(
-    'debug|d'           => \$debug,
-    'fork'              => \$fork,
-    'help|?'            => \$help,
-    'host=s'            => \$host,
-    'port=s'            => \$port,
-    'keepalive|k'       => \$keepalive,
-    'restart|r'         => \$restart,
-    'restartdelay|rd=s' => \$restart_delay,
-    'restartregex|rr=s' => \$restart_regex
-);
-
-pod2usage(1) if $help;
-
-if ( $restart ) {
-    $ENV{CATALYST_ENGINE} = 'HTTP::Restarter';
-}
-if ( $debug ) {
-    $ENV{CATALYST_DEBUG} = 1;
-}
-
-# This is require instead of use so that the above environment
-# variables can be set at runtime.
-require Freelex;
-
-Freelex->run( $port, $host, {
-    argv          => \@argv,
-    'fork'        => $fork,
-    keepalive     => $keepalive,
-    restart       => $restart,
-    restart_delay => $restart_delay,
-    restart_regex => qr/$restart_regex/
-} );
+use Catalyst::ScriptRunner;
+Catalyst::ScriptRunner->run('Freelex', 'Server');
 
 1;
 
 =head1 NAME
 
-freelex_server.pl - Catalyst Testserver
+flsample_server.pl - Catalyst Test Server
 
 =head1 SYNOPSIS
 
-freelex_server.pl [options]
+flsample_server.pl [options]
 
- Options:
-   -d -debug          force debug mode
-   -f -fork           handle each request in a new process
-                      (defaults to false)
-   -? -help           display this help and exits
-      -host           host (defaults to all)
-   -p -port           port (defaults to 3000)
-   -k -keepalive      enable keep-alive connections
-   -r -restart        restart when files got modified
-                      (defaults to false)
-   -rd -restartdelay  delay between file checks
-   -rr -restartregex  regex match files that trigger
-                      a restart when modified
-                      (defaults to '\.yml$|\.yaml$|\.pm$')
+   -d --debug           force debug mode
+   -f --fork            handle each request in a new process
+                        (defaults to false)
+   -? --help            display this help and exits
+   -h --host            host (defaults to all)
+   -p --port            port (defaults to 3000)
+   -k --keepalive       enable keep-alive connections
+   -r --restart         restart when files get modified
+                        (defaults to false)
+   -rd --restart_delay  delay between file checks
+                        (ignored if you have Linux::Inotify2 installed)
+   -rr --restart_regex  regex match files that trigger
+                        a restart when modified
+                        (defaults to '\.yml$|\.yaml$|\.conf|\.pm$')
+   --restart_directory  the directory to search for
+                        modified files, can be set multiple times
+                        (defaults to '[SCRIPT_DIR]/..')
+   --follow_symlinks    follow symlinks in search directories
+                        (defaults to false. this is a no-op on Win32)
+   --background         run the process in the background
+   --pidfile            specify filename for pid file
 
  See also:
    perldoc Catalyst::Manual
@@ -91,15 +51,14 @@ freelex_server.pl [options]
 
 Run a Catalyst Testserver for this application.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Sebastian Riedel, C<sri@oook.de>
+Catalyst Contributors, see Catalyst.pm
 
 =head1 COPYRIGHT
 
-Copyright 2004 Sebastian Riedel. All rights reserved.
-
-This library is free software, you can redistribute it and/or modify
+This library is free software. You can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
